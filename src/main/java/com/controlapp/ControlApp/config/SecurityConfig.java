@@ -32,10 +32,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // ← AGREGAR ESTA LÍNEA
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/materia-prima/delete/**").hasRole("ADMIN")
                         .requestMatchers("/api/materia-prima/**").hasAnyRole("ADMIN", "USER")
                         .anyRequest().authenticated()
                 )
