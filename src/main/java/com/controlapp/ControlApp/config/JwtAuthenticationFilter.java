@@ -58,4 +58,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        // Permitir requests OPTIONS (preflight) sin pasar por el filtro JWT
+        return "OPTIONS".equals(request.getMethod());
+    }
 }
